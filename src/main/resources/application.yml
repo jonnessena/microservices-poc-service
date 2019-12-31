@@ -1,0 +1,53 @@
+
+spring:
+  application:
+    name: API-SERVICE
+  main:
+    banner_mode: 'off'
+    allow-bean-definition-overriding: true
+
+
+server:
+    port: 8087
+
+
+keycloak:
+  #auth-server-url: http://localhost:8180/auth
+  auth-server-url: http://172.17.0.2:8080/auth
+  credentials:
+    secret: '123456'
+  public-client: false
+  realm: api-gateway
+  resource: service-user
+  ssl-required: none
+  securityConstraints:
+  - authRoles:
+    - user
+    - master
+    securityCollections:
+    - name: user-roles
+      patterns:
+      - /secure/user
+  - authRoles:
+    - master
+    securityCollections:
+    - name: master-roles
+      patterns:
+      - /secure/master
+logging:
+  level.org.keycloak: DEBUG
+  level.org.apache.catalina.authenticator: DEBUG
+  level.de.ctrlaltdel: DEBUG
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.25.5:8761/eureka
+  ribbon:
+    eureka:
+      enabled: true
+    http:
+      client:
+        enabled: true
+  instance:
+    instance-id: API-SERVICE
