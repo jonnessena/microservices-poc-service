@@ -8,6 +8,7 @@ import org.keycloak.representations.AccessToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +29,7 @@ public class ServiceController {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
+        @PreAuthorize("hasRole('auauau')")
         @RequestMapping(path = "secure/user", produces = MediaType.APPLICATION_JSON_VALUE)
         public String user(Principal principal, HttpServletResponse response, HttpServletRequest request) throws Exception {
         if (principal instanceof KeycloakPrincipal) {
